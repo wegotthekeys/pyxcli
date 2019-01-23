@@ -435,12 +435,12 @@ class MetadataServiceDBAlreadyExistsError(CommandFailedRuntimeError):
     pass
 
 
-@CommandExecutionError.register("STATUS_METADATA_SERVICE_KEY_DOES_NOT_EXIST")
+@CommandExecutionError.register("STATUS_METADATA_SERVICE_KEY_DOES_NOT_EXIST", "KEY_DOES_NOT_EXIST")
 class MetadataServiceKeyDoesNotExistError(CommandFailedRuntimeError):
     pass
 
 
-@CommandExecutionError.register("STATUS_METADATA_SERVICE_KEY_ALREADY_EXISTS")
+@CommandExecutionError.register("STATUS_METADATA_SERVICE_KEY_ALREADY_EXISTS", "KEY_EXISTS")
 class MetadataServiceKeyAlreadyExistsError(CommandFailedRuntimeError):
     pass
 
