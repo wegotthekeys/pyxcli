@@ -15,7 +15,7 @@
 ##############################################################################
 
 from logging import getLogger
-from bunch import Bunch
+from munch import Munch as Bunch
 from pyxcli import XCLI_DEFAULT_LOGGER
 
 CG = "cg"
