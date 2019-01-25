@@ -19,6 +19,11 @@ import xml.etree.cElementTree as cet
 from contextlib import contextmanager
 from xml.parsers.expat import ExpatError
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
 Element = cet.Element
 tostring = cet.tostring
 
@@ -49,7 +54,7 @@ def str_brief(obj, lim=20, dots='...', use_repr=True):
     >>> str_brief(2 ** 50, lim=10, dots='0')
     '11258999060'
     """
-    if isinstance(obj, str) or not use_repr:
+    if isinstance(obj, basestring) or not use_repr:
         full = str(obj)
     else:
         full = repr(obj)

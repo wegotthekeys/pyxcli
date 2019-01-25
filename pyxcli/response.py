@@ -28,6 +28,16 @@ from pyxcli.helpers import xml_util as etree
 import base64
 import codecs
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class XCLIResponse(object):
     RETURN_PATH = "return"
 
@@ -105,9 +115,9 @@ class XCLIResponse(object):
         return len(self.as_list)
 
     def __getitem__(self, item):
-        if isinstance(item, str):
+        if isinstance(item, basestring):
             return self.all(item)
-        elif isinstance(item, int):
+        elif isinstance(item, (int,long)):
 
             return list(self.all())[item]
         else:

@@ -40,6 +40,11 @@ from pyxcli.transports import MultiEndpointTransport
 from pyxcli.response import XCLIResponse
 from pyxcli.helpers.exceptool import chained
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
 xlog = getLogger(XCLI_DEFAULT_LOGGER)
 
 
@@ -203,7 +208,7 @@ class XCLIClient(BaseXCLIClient):
         Creates an SSL transport to the first endpoint (aserver) to which
         we successfully connect
         """
-        if isinstance(endpoints, str):
+        if isinstance(endpoints, basestring):
             endpoints = [endpoints]
         transport = SingleEndpointTransport(
             SocketTransport.connect_ssl, endpoints, ca_certs=ca_certs,
@@ -223,7 +228,7 @@ class XCLIClient(BaseXCLIClient):
         on the system to discover all management IP interfaces and add them
         to the list of endpoints
         """
-        if isinstance(endpoints, str):
+        if isinstance(endpoints, basestring):
             endpoints = [endpoints]
         client, transport = cls._initiate_client_for_multi_endpoint(user,
                                                                     password,

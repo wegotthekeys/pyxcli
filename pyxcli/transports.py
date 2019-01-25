@@ -34,6 +34,11 @@ from pyxcli.errors import ConnectionError
 from pyxcli.errors import CorruptResponse
 from pyxcli.errors import BaseScsiException
 
+try:
+    basestring
+except NameError:
+    basestring = str
+
 xlog = getLogger(XCLI_DEFAULT_LOGGER)
 
 
@@ -308,7 +313,7 @@ class MultiEndpointTransport(Transport):
         self.connector = None
 
     def add_endpoints(self, endpoints):
-        if isinstance(endpoints, str):
+        if isinstance(endpoints, basestring):
             endpoints = [endpoints]
         self.available_endpoints.extend(endpoints)
 
