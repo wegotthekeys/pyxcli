@@ -49,7 +49,7 @@ def str_brief(obj, lim=20, dots='...', use_repr=True):
     >>> str_brief(2 ** 50, lim=10, dots='0')
     '11258999060'
     """
-    if isinstance(obj, basestring) or not use_repr:
+    if isinstance(obj, str) or not use_repr:
         full = str(obj)
     else:
         full = repr(obj)
@@ -189,7 +189,7 @@ class TerminationDetectingXMLParser(object):
 
     def __init__(self):
         self.tree_builder = _TerminationDetectingTreeBuilder()
-        self.xml_tree_builder = et.XMLTreeBuilder(target=self.tree_builder)
+        self.xml_tree_builder = et.XMLParser(target=self.tree_builder)
 
     def feed(self, chunk):
         with _translateExceptions(chunk):
