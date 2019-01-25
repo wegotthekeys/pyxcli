@@ -223,7 +223,8 @@ class SocketTransport(object):
 
         while data:
             chunk = data[:self.MAX_IO_CHUNK]
-            sent = self.sock.send(chunk)
+            byte_chunk = chunk.encode()
+            sent = self.sock.send(byte_chunk)
             data = data[sent:]
 
         parser = TerminationDetectingXMLParser()
@@ -233,7 +234,7 @@ class SocketTransport(object):
                 chunk = self.sock.recv(self.MAX_IO_CHUNK)
                 if not chunk:
                     break
-                raw += chunk
+                raw += chunk.decode()
                 parser.feed(chunk)
             return parser.close()
         except XMLException as ex:
@@ -307,7 +308,7 @@ class MultiEndpointTransport(Transport):
         self.connector = None
 
     def add_endpoints(self, endpoints):
-        if isinstance(endpoints, basestring):
+        if isinstance(endpoints, str):
             endpoints = [endpoints]
         self.available_endpoints.extend(endpoints)
 

@@ -203,7 +203,7 @@ class XCLIClient(BaseXCLIClient):
         Creates an SSL transport to the first endpoint (aserver) to which
         we successfully connect
         """
-        if isinstance(endpoints, basestring):
+        if isinstance(endpoints, str):
             endpoints = [endpoints]
         transport = SingleEndpointTransport(
             SocketTransport.connect_ssl, endpoints, ca_certs=ca_certs,
@@ -223,7 +223,7 @@ class XCLIClient(BaseXCLIClient):
         on the system to discover all management IP interfaces and add them
         to the list of endpoints
         """
-        if isinstance(endpoints, basestring):
+        if isinstance(endpoints, str):
             endpoints = [endpoints]
         client, transport = cls._initiate_client_for_multi_endpoint(user,
                                                                     password,
@@ -261,7 +261,7 @@ class XCLIClient(BaseXCLIClient):
         return str(obj)
 
     def _build_command(self, cmd, params, options, remote_target=None):
-        root = etree.Element("command", id=str(self._cmdindex.next()),
+        root = etree.Element("command", id=str(next(self._cmdindex)),
                              type=cmd, close_on_return="no")
         if remote_target:
             root.attrib["remote_target"] = remote_target
@@ -273,8 +273,16 @@ class XCLIClient(BaseXCLIClient):
             root.append(etree.Element("argument", name=self._dump_xcli(k),
                                       value=self._dump_xcli(v)))
         data = etree.tostring(root)
-        anon = data.replace(options["password"],
-                            "XXX") if "password" in options else data
+
+        if("password" in options):
+            data = data.decode()
+            data.replace(options["password"], "XXX")
+            data.encode()
+
+        anon = data
+
+        # anon = data.replace(options["password"],
+        #                     "XXX") if "password" in options else data
         xlog.debug("SEND %s" % (anon))
         return data
 
