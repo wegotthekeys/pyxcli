@@ -1,0 +1,15 @@
+language: python
+dist: xenial
+python:
+  - "2.6"
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+sudo: true
+install:
+  - pip install -r test-requirements.txt
+  - pip install -r requirements.txt
+script:
+  - nosetest -v
