@@ -285,9 +285,6 @@ class XCLIClient(BaseXCLIClient):
             data.encode()
 
         anon = data
-
-        # anon = data.replace(options["password"],
-        #                     "XXX") if "password" in options else data
         xlog.debug("SEND %s" % (anon))
         return data
 
